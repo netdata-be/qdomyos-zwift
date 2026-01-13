@@ -1318,7 +1318,7 @@ jobs:
           cd ..
 
       - name: Build for Raspberry Pi 64-bit
-        uses: docker://arm64v8/debian:bullseye-20241016
+        uses: docker://arm64v8/debian:trixie-slim
         with:
           args: >
             bash -c "
