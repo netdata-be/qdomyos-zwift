@@ -1285,9 +1285,14 @@ void ftmsbike::stateChanged(QLowEnergyService::ServiceState state) {
 
     for (QLowEnergyService *s : qAsConst(gattCommunicationChannelService)) {
         qDebug() << QStringLiteral("stateChanged") << s->serviceUuid() << s->state();
-        if (s->state() != QLowEnergyService::ServiceDiscovered && s->state() != QLowEnergyService::InvalidService) {
-            qDebug() << QStringLiteral("not all services discovered");
-            return;
+
+        if (s->state() == QLowEnergyService::DiscoveringServices) {
+          qDebug() << QStringLiteral("WWW - ingoring and continueing");
+        } else {
+            if (s->state() != QLowEnergyService::ServiceDiscovered && s->state() != QLowEnergyService::InvalidService ) {
+                qDebug() << QStringLiteral("not all services discovered");
+                return;
+            }
         }
     }
 
@@ -1793,7 +1798,7 @@ void ftmsbike::deviceDiscovered(const QBluetoothDeviceInfo &device) {
             S18 = true;
             max_resistance = 24;
         } else if(device.name().toUpper().startsWith("JFICCYCLE")) {
-            qDebug() << QStringLiteral("JFICCYCLE found");
+            qDebug() << QStringLiteral("WWW JFICCYCLE found");
             JFICCYCLE = true;
         }
 
